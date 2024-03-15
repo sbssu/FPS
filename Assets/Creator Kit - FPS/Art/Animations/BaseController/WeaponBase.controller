@@ -569,7 +569,7 @@ AnimatorStateTransition:
   m_CanTransitionToSelf: 1
 --- !u!1102 &1102146842471263952
 AnimatorState:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -597,7 +597,7 @@ AnimatorState:
   m_TimeParameter: 
 --- !u!1102 &1102510015156110140
 AnimatorState:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -627,7 +627,7 @@ AnimatorState:
   m_TimeParameter: speed
 --- !u!1102 &1102520201302122080
 AnimatorState:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -655,7 +655,7 @@ AnimatorState:
   m_TimeParameter: reloadSpeed
 --- !u!1102 &1102634695465204414
 AnimatorState:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -685,7 +685,7 @@ AnimatorState:
   m_TimeParameter: 
 --- !u!1102 &1102909257469209150
 AnimatorState:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -714,7 +714,7 @@ AnimatorState:
   m_TimeParameter: fireSpeed
 --- !u!1102 &1102950720315765088
 AnimatorState:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -744,7 +744,7 @@ AnimatorState:
   m_TimeParameter: 
 --- !u!1107 &1107362943361108684
 AnimatorStateMachine:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -762,7 +762,7 @@ AnimatorStateMachine:
     m_Position: {x: 672, y: 108, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102520201302122080}
-    m_Position: {x: 360, y: -84, z: 0}
+    m_Position: {x: 370, y: -100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102146842471263952}
     m_Position: {x: 480, y: 216, z: 0}

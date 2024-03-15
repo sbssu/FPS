@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Objeect")]
     [SerializeField] Transform cam;
-    [SerializeField] WeaponController[] defaultWeapons;
+    [SerializeField] Gun[] defaultWeapons;
 
     [Header("Status")]
     [Range(1.0f, 10.0f)]
@@ -21,7 +21,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float runSpeed;        // 달리는 속도.
     [SerializeField] float jumpHeight;      // 점프 높이.
 
-    WeaponController[] weapons;             // 현재 장비중인 무기 배열.
+    Gun[] weapons;             // 현재 장비중인 무기 배열.
+    int gunIndex;                   // 장비중인 무기의 indesx.
 
     CharacterController controller;         // 캐릭터 컨트롤러.
     Vector3 verticalVelocity;               // 수직 속력(=중력 가속도)
@@ -45,19 +46,28 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>();
 
         // 기본 소지 무기 초기화.
-        weapons = new WeaponController[3];
+        weapons = new Gun[3];
         for (int i = 0; i < defaultWeapons.Length; i++)
         {
             weapons[i] = defaultWeapons[i];
             if (weapons[i] != null)
+            {
                 weapons[i].Setup(this);
+                weapons[i].gameObject.SetActive(false);
+            }
         }
+
+        gunIndex = 0;
+
+        // 0번째 무기 선택.
+        weapons[gunIndex].Pickup();
     }
 
     void Update()
     {
         CheckGround();
         Movement();
+        Controller();
         Gravity();                
     }
 
@@ -117,6 +127,41 @@ public class PlayerController : MonoBehaviour
             verticalVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             isGrounded = false;
         }
+    }
+    private void Controller()
+    {
+        if (isPause || isLock)
+            return;
+
+        // 무기 전환.
+        float wheel = Input.GetAxisRaw("Mouse ScrollWheel");
+        if(wheel != 0)
+        {
+            int wasIndex = gunIndex;
+            do
+            {
+                // 같은 번호가 나오거나 null이 아닌 무기가 나올때까지 loop.
+                gunIndex += (wheel > 0) ? -1 : 1;
+                if (gunIndex < 0)
+                    gunIndex = weapons.Length - 1;
+                else if (gunIndex >= weapons.Length)
+                    gunIndex = 0;
+                if (gunIndex == wasIndex)
+                    break;
+
+            } while (weapons[gunIndex] == null);
+
+            if(gunIndex != wasIndex)
+            {
+                weapons[wasIndex].PutAway();
+                weapons[gunIndex].Pickup();
+            }
+        }
+
+        // 공격.
+        weapons[gunIndex].IsTriggerDown = Input.GetButton("Fire");
+        if (Input.GetKeyDown(KeyCode.R))
+            weapons[gunIndex].Reload();
     }
     private void Gravity()
     {

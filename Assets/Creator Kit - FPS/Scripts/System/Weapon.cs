@@ -142,7 +142,6 @@ public class Weapon : MonoBehaviour
     {
         m_Owner = c;
     }
-
     public void PutAway()
     {
         m_Animator.WriteDefaultValues();
