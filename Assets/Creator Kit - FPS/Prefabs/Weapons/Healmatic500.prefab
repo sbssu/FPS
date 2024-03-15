@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggerType: 1
-  weaponType: 0
+  weaponType: 1
   fireRate: 0.3
   reloadTime: 1.4
   clipSize: 8

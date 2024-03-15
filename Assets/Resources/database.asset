@@ -9,16 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb8b1b9c80db01842adf30a00b5945e1, type: 3}
-  m_Name: GameDatabase
+  m_Script: {fileID: 11500000, guid: 03869c00f5d84a1449772477cb2aa321, type: 3}
+  m_Name: database
   m_EditorClassIdentifier: 
-  ammoDatabase:
-    maxId: 10
+  ammoData:
     entries:
-    - name: Medicine phial
-      id: 0
-    - name: Pill
+    - name: RIFLE
       id: 2
-    - name: Dummy bullet
-      id: 8
-  episodes: []
+    - name: PISTOL
+      id: 1

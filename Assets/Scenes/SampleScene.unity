@@ -1334,6 +1334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   trigger: 0
+  ammoType: 0
   isAutoReload: 0
   bulletPrefab: {fileID: 7748105136891847781, guid: ebdb4b6347e1f5c4bba3a29aefc92ad7,
     type: 3}
@@ -2001,6 +2002,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   trigger: 1
+  ammoType: 0
   isAutoReload: 0
   bulletPrefab: {fileID: 7748105136891847781, guid: ebdb4b6347e1f5c4bba3a29aefc92ad7,
     type: 3}
@@ -2293,7 +2295,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  trigger: 1
+  trigger: 0
+  ammoType: 2
   isAutoReload: 0
   bulletPrefab: {fileID: 0}
   muzzle: {fileID: 1491412425}

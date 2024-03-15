@@ -469,7 +469,7 @@ public class AmmoTypeDrawer : PropertyDrawer
             }
 
             EditorGUI.BeginChangeCheck();
-            int idx = EditorGUI.Popup(position, "Ammo Type", currentIdx, names);
+            int idx = EditorGUI.Popup(position, "탄약 종류", currentIdx, names);
             if (EditorGUI.EndChangeCheck())
             {
                 property.intValue = ammoDB.entries[idx].id;
