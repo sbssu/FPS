@@ -21,8 +21,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float runSpeed;        // 달리는 속도.
     [SerializeField] float jumpHeight;      // 점프 높이.
 
-    Gun[] weapons;             // 현재 장비중인 무기 배열.
-    int gunIndex;                   // 장비중인 무기의 indesx.
+    Dictionary<int, int> ammoInven;         // 탄약 인벤토리.
+
+    Gun[] weapons;                          // 현재 장비중인 무기 배열.
+    int gunIndex;                           // 장비중인 무기의 indesx.
 
     CharacterController controller;         // 캐릭터 컨트롤러.
     Vector3 verticalVelocity;               // 수직 속력(=중력 가속도)
@@ -45,6 +47,11 @@ public class PlayerController : MonoBehaviour
         UnityEngine.Rendering.DebugManager.instance.enableRuntimeUI = false;
         controller = GetComponent<CharacterController>();
 
+        // 탄약 인벤토리 초기화.
+        ammoInven = new Dictionary<int, int>();
+        foreach(var entry in Database.Instance.ammoData.entries)
+            ammoInven.Add(entry.id, 150);
+
         // 기본 소지 무기 초기화.
         weapons = new Gun[3];
         for (int i = 0; i < defaultWeapons.Length; i++)
@@ -61,6 +68,8 @@ public class PlayerController : MonoBehaviour
 
         // 0번째 무기 선택.
         weapons[gunIndex].Pickup();
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
@@ -170,5 +179,35 @@ public class PlayerController : MonoBehaviour
         CollisionFlags flag = controller.Move(verticalVelocity * Time.deltaTime);
         if ((flag & CollisionFlags.Below) != 0)
             verticalVelocity.y = 0f;
+    }
+
+    public int GetAmmo(int id, int amount)
+    {
+        int ammo = 0;
+        if (ammoInven[id] <= 0)
+            return 0;
+
+        // 최대 개수보다 적을 경우.
+        if (ammoInven[id] < amount)
+        {
+            ammo = ammoInven[id];
+            ammoInven[id] = 0;
+        }
+        else
+        {
+            ammo = amount;
+            ammoInven[id] -= amount;
+        }
+        return ammo;
+    }
+    public int GetMaxAmmo(int id)
+    {
+        return ammoInven[id];
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(cam.transform.position, cam.transform.forward * 100f);        
     }
 }

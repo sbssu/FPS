@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] float TimeToDestroyed;
+    [SerializeField] ParticleSystem hitVfx;
 
     float moveSpeed;
     float damage;
@@ -19,6 +20,17 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+        if (enemy != null)
+            enemy.Hit(damage);
+
+        Vector3 normal = collision.contacts[0].normal;
+
+        // 히트 이펙트 재생.
+        ParticleSystem vfx = Instantiate(hitVfx);
+        vfx.transform.position = transform.position;
+        vfx.transform.rotation = Quaternion.LookRotation(normal);
+
         Destroy(gameObject);
     }
 
