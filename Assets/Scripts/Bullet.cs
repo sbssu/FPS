@@ -1,24 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour, IReturnPool<Bullet>
 {
-    [SerializeField] float TimeToDestroyed;
-    [SerializeField] ParticleSystem hitVfx;
+    [SerializeField] protected float TimeToDestroyed;
+    [SerializeField] protected ParticleSystem hitVfx;
 
-    float moveSpeed;
-    float damage;
-    float showTime;
+    protected float moveSpeed;
+    protected float damage;
+    protected float showTime;
 
-    public void Shoot(float moveSpeed, float damage)
+    public event Action<Bullet> release;
+
+    public virtual void Shoot(float moveSpeed, float damage)
     {
         this.moveSpeed = moveSpeed;
         this.damage = damage;
         showTime = 0.0f;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    protected virtual void OnCollisionEnter(Collision collision)
     {
         Enemy enemy = collision.gameObject.GetComponent<Enemy>();
         if (enemy != null)
@@ -31,15 +32,20 @@ public class Bullet : MonoBehaviour
         vfx.transform.position = transform.position;
         vfx.transform.rotation = Quaternion.LookRotation(normal);
 
-        Destroy(gameObject);
+        Release();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         transform.position += transform.forward * moveSpeed * Time.deltaTime;
         if((showTime += Time.deltaTime) >= TimeToDestroyed)
         {
-            Destroy(gameObject);
+            Release();
         }
+    }
+
+    protected void Release()
+    {
+        release?.Invoke(this);
     }
 }

@@ -133,7 +133,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100004, guid: 9c5a36cef55a3614a866b354444f08a5, type: 3}
       propertyPath: m_Name
-      value: PillAnimations
+      value: Pill
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: 9c5a36cef55a3614a866b354444f08a5, type: 3}
       propertyPath: m_IsActive
@@ -1339,6 +1339,48 @@ MonoBehaviour:
   bulletPrefab: {fileID: 7748105136891847781, guid: ebdb4b6347e1f5c4bba3a29aefc92ad7,
     type: 3}
   muzzle: {fileID: 2053913544}
+  config:
+    material: {fileID: 0}
+    widthCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    duration: 0.5
+    minVertexDistance: 0.1
+    color:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_ColorSpace: -1
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    missDistance: 100
+    simulationSpeed: 100
   takeOutClip: {fileID: 7400004, guid: 36622a955330bc346a249a1e63e61d2a, type: 3}
   fireClip: {fileID: 7400006, guid: 36622a955330bc346a249a1e63e61d2a, type: 3}
   reloadClip: {fileID: 7400008, guid: 36622a955330bc346a249a1e63e61d2a, type: 3}
@@ -2045,6 +2087,48 @@ MonoBehaviour:
   bulletPrefab: {fileID: 7748105136891847781, guid: ebdb4b6347e1f5c4bba3a29aefc92ad7,
     type: 3}
   muzzle: {fileID: 411618637}
+  config:
+    material: {fileID: 0}
+    widthCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    duration: 0.5
+    minVertexDistance: 0.1
+    color:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_ColorSpace: -1
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    missDistance: 100
+    simulationSpeed: 100
   takeOutClip: {fileID: 7400006, guid: 48d0d593c4a87604d8229843efb1af29, type: 3}
   fireClip: {fileID: 7400002, guid: 48d0d593c4a87604d8229843efb1af29, type: 3}
   reloadClip: {fileID: 7400004, guid: 48d0d593c4a87604d8229843efb1af29, type: 3}
@@ -2888,8 +2972,51 @@ MonoBehaviour:
   trigger: 0
   ammoType: 1
   isAutoReload: 0
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 9059824186876293328, guid: 65e438a3ba34f604988b0d264f13ea08,
+    type: 3}
   muzzle: {fileID: 1491412425}
+  config:
+    material: {fileID: 0}
+    widthCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    duration: 0.5
+    minVertexDistance: 0.1
+    color:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_ColorSpace: -1
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    missDistance: 100
+    simulationSpeed: 100
   takeOutClip: {fileID: 7400004, guid: 9c5a36cef55a3614a866b354444f08a5, type: 3}
   fireClip: {fileID: 7400000, guid: 9c5a36cef55a3614a866b354444f08a5, type: 3}
   reloadClip: {fileID: 7400000, guid: a6c840a53e370b24283ca137fe609958, type: 2}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class Gun : MonoBehaviour
 {
@@ -74,6 +75,7 @@ public class Gun : MonoBehaviour
     float rateTimer;
     Animator anim;
     PlayerController owner;
+    ObjectPool<Bullet> pool;
 
     public void Setup(PlayerController owner)
     {
@@ -84,7 +86,9 @@ public class Gun : MonoBehaviour
         reloadHash = Animator.StringToHash(reloadClip.name);
         takeOutHash = Animator.StringToHash(takeOutClip.name);
 
-        currentAmmo = maxAmmo;
+        // 최초에 풀링을 이용해 총알을 많이 생성한다.
+        pool = new ObjectPool<Bullet>();
+        pool.Setup(gameObject, bulletPrefab, 30);
     }
     public void Pickup()
     {
@@ -174,9 +178,10 @@ public class Gun : MonoBehaviour
     {
         if (rateTimer <= 0.0f && currentAmmo > 0 && state == STATE.IDLE)
         {
-            Bullet bullet = Instantiate(bulletPrefab, muzzle.position, muzzle.rotation);
-            bullet.transform.LookAt(hitPoint);  // 해당 지점으로 바라보는 회전
-            bullet.Shoot(speed, damage);
+            Bullet bullet = pool.Get();                         // 풀링에서 하나를 꺼낸다.
+            bullet.transform.position = muzzle.position;        // 총구 위치로 이동.
+            bullet.transform.LookAt(hitPoint);                  // 해당 지점으로 바라보는 회전
+            bullet.Shoot(speed, damage);                        // 발사 함수 호출.
 
             anim.SetTrigger("onFire");
             rateTimer = fireRate;
