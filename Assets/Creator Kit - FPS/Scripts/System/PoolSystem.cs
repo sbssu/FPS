@@ -12,6 +12,9 @@ public class PoolSystem : MonoBehaviour
 
     public static void Create()
     {
+        if (Instance != null)
+            return;
+
         GameObject obj = new GameObject("PoolSystem");
         Instance = obj.AddComponent<PoolSystem>();
     }
@@ -59,6 +62,16 @@ public class PoolSystem : MonoBehaviour
 
         UnityEngine.Debug.LogError("No pool was init with this prefab");
         return null;
+    }
+    public void ReleasePool(Object key, Object value)
+    {
+        if (m_Pools.ContainsKey(key))
+        {
+            m_Pools[key].Enqueue(value);
+            SetActive(value, false);
+        }
+        else
+            Destroy(value as GameObject);
     }
     
     static void SetActive(Object obj, bool active)
