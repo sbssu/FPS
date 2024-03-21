@@ -9,7 +9,7 @@ public class Grenade : Bullet
     public override void Shoot(float moveSpeed, float damage)
     {
         base.Shoot(moveSpeed, damage);
-        GetComponent<Rigidbody>().AddForce(transform.forward * 10f, ForceMode.Impulse);
+        GetComponent<Rigidbody>().AddForce(transform.forward * moveSpeed, ForceMode.Impulse);
     }
 
     protected override void OnCollisionEnter(Collision collision)
@@ -32,7 +32,7 @@ public class Grenade : Bullet
         {
             Enemy enemy = collider.gameObject.GetComponent<Enemy>();
             if(enemy != null)
-                enemy.Hit(damage);
+                enemy.OnHit(HITTYPE.UPPER, damage);
         }
 
         Release();

@@ -7,60 +7,46 @@ using UnityEngine.Pool;
 
 public class Gun : MonoBehaviour
 {
-    enum STATE
+    protected enum STATE
     {
         TAKEOUT,    // 무기뽑기
         IDLE,       // 대기상태
         FIRE,       // 사격
         REROAD,     // 재장전
     }
-    enum TRIGGER
+    protected enum TRIGGER
     {
         AUTO,       // 자동(연사)
         MANUAL,     // 수동(단발)
     }
 
-    [System.Serializable]
-    class TrailConfig
-    {
-        public Material material;
-        public AnimationCurve widthCurve;
-        public float duration = 0.5f;
-        public float minVertexDistance = 0.1f;
-        public Gradient color;
-
-        public float missDistance = 100f;
-        public float simulationSpeed = 100f;
-    }
-
     [Header("State")]
-    [SerializeField] STATE state;
-    [SerializeField] TRIGGER trigger;
+    [SerializeField] protected STATE state;
+    [SerializeField] protected TRIGGER trigger;
 
     [Ammo]
-    [SerializeField] int ammoType;
-    [SerializeField] bool isAutoReload;
+    [SerializeField] protected int ammoType;
+    [SerializeField] protected bool isAutoReload;
 
     [Header("Object")]
-    [SerializeField] Bullet bulletPrefab;   // 총알 프리팹.
-    [SerializeField] Transform muzzle;      // 총구.
-    [SerializeField] TrailConfig config;   
+    [SerializeField] protected Bullet bulletPrefab;   // 총알 프리팹.
+    [SerializeField] protected Transform muzzle;      // 총구.
 
     [Header("Animator Clip")]
-    [SerializeField] AnimationClip takeOutClip;
-    [SerializeField] AnimationClip fireClip;
-    [SerializeField] AnimationClip reloadClip;
+    [SerializeField] protected AnimationClip takeOutClip;
+    [SerializeField] protected AnimationClip fireClip;
+    [SerializeField] protected AnimationClip reloadClip;
 
     [Header("Parametor")]
-    [SerializeField] float fireRate;        // 연사속도.
-    [SerializeField] float speed;           // 탄속.
-    [SerializeField] float damage;          // 데미지.
-    [SerializeField] int maxAmmo;           // 최대 탄약수.
+    [SerializeField] protected float fireRate;        // 연사속도.
+    [SerializeField] protected float speed;           // 탄속.
+    [SerializeField] protected float damage;          // 데미지.
+    [SerializeField] protected int maxAmmo;           // 최대 탄약수.
 
-    const float MAX_DISTANCE = 100f;
+    protected const float MAX_DISTANCE = 100f;
 
-    bool isTriggerDown;
-    bool isShotDone;
+    protected bool isTriggerDown;
+    protected bool isShotDone;
     public bool IsTriggerDown
     {
         set
@@ -71,11 +57,11 @@ public class Gun : MonoBehaviour
         }
     }
 
-    int currentAmmo;            // 현재 탄약수.
-    float rateTimer;
-    Animator anim;
-    PlayerController owner;
-    ObjectPool<Bullet> pool;
+    protected int currentAmmo;            // 현재 탄약수.
+    protected float rateTimer;
+    protected Animator anim;
+    protected PlayerController owner;
+    protected ObjectPool<Bullet> pool;
 
     public void Setup(PlayerController owner)
     {
@@ -109,26 +95,8 @@ public class Gun : MonoBehaviour
     private void Update()
     {
         UpdateWeaponState();
-
-        // 총의 목표 지점 갱신.
-        Transform camPivot = Camera.main.transform;
-        hitPoint = Vector3.zero;
-        if (Physics.Raycast(camPivot.position, camPivot.forward, out RaycastHit hit, MAX_DISTANCE))
-            hitPoint = hit.point;
-        else
-            hitPoint = camPivot.position + camPivot.forward * MAX_DISTANCE;
-
-        // 트리거가 눌려서 총기를 발사한다.
-        if (state != STATE.TAKEOUT && isTriggerDown)
-        {
-            if (trigger == TRIGGER.MANUAL && !isShotDone)
-            {
-                isShotDone = true;
-                Fire();
-            }
-            else if (trigger == TRIGGER.AUTO)
-                Fire();
-        }
+        UpdateRayTarget();
+        UpdateWeaponControl();
 
         // 변수 값 갱신.
         rateTimer = Mathf.Clamp(rateTimer - Time.deltaTime, 0.0f, fireRate);
@@ -172,8 +140,32 @@ public class Gun : MonoBehaviour
             }
         }
     }
+    private void UpdateRayTarget()
+    {
+        // 총의 목표 지점 갱신.
+        Transform camPivot = Camera.main.transform;
+        hitPoint = Vector3.zero;
+        if (Physics.Raycast(camPivot.position, camPivot.forward, out RaycastHit hit, MAX_DISTANCE))
+            hitPoint = hit.point;
+        else
+            hitPoint = camPivot.position + camPivot.forward * MAX_DISTANCE;
+    }
+    protected virtual void UpdateWeaponControl()
+    {
+        // 트리거가 눌려서 총기를 발사한다.
+        if (state != STATE.TAKEOUT && isTriggerDown)
+        {
+            if (trigger == TRIGGER.MANUAL && !isShotDone)
+            {
+                isShotDone = true;
+                Fire();
+            }
+            else if (trigger == TRIGGER.AUTO)
+                Fire();
+        }
+    }
 
-    Vector3 hitPoint;
+    protected Vector3 hitPoint;
     private void Fire()
     {
         if (rateTimer <= 0.0f && currentAmmo > 0 && state == STATE.IDLE)
@@ -189,63 +181,16 @@ public class Gun : MonoBehaviour
             UIManager.Instance.UpdateAmmo(currentAmmo, owner.GetMaxAmmo(ammoType));
         }
     }
-    public void Reload(bool isForce = false)
+    public virtual void Reload(bool isForce = false)
     {
         if (state == STATE.IDLE || isForce)
         {
             anim.SetTrigger("onReload");
         }
     }
-    private IEnumerator PlayTrail(Vector3 start, Vector3 end, RaycastHit hit)
-    {
-        TrailRenderer instance = CreateTrail();
-        instance.gameObject.SetActive(true);
-        instance.transform.position = start;
-        yield return null;
-
-        instance.emitting = true;
-
-        float distance = Vector3.Distance(start, end);
-        float remaining = distance;
-        while(remaining > 0)
-        {
-            instance.transform.position = Vector3.Lerp(
-                start,
-                end,
-                Mathf.Clamp01(1 - (remaining / distance))
-                );
-            remaining -= config.simulationSpeed * Time.deltaTime;
-        }
-
-        yield return new WaitForSeconds(config.duration);
-        yield return null;
-        instance.emitting = false;
-        instance.gameObject.SetActive(false);
-        Destroy(instance.gameObject);
-    }
-    private TrailRenderer CreateTrail()
-    {
-        GameObject instance = new GameObject("Bullet Trail");
-        TrailRenderer trail = instance.AddComponent<TrailRenderer>();
-        trail.colorGradient = config.color;
-        trail.material = config.material;
-        trail.widthCurve = config.widthCurve;
-        trail.time = config.duration;
-        trail.minVertexDistance = config.minVertexDistance;
-        trail.emitting = false;
-        trail.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-        return trail;
-    }
-
     private void PlayFootstep()
     {
 
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(muzzle.position, hitPoint);
     }
 }
 

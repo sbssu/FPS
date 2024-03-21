@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "IMpact System/Play Audio Effect", fileName = "PlayAudioEffect")]
+[CreateAssetMenu(menuName = "Impact System/Play Audio Effect", fileName = "PlayAudioEffect")]
+[System.Serializable]
 public class PlayAudioEffect : ScriptableObject
 {
     public AudioSource audioSourcePrefab;

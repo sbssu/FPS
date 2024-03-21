@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -8,14 +9,15 @@ public class Enemy : MonoBehaviour
     [SerializeField] SkinnedMeshRenderer meshRender;
 
     float hp;
-
     private void Start()
     {
         hp = maxHp;
     }
 
-    public void Hit(float damage)
+    public void OnHit(HITTYPE type, float damage)
     {
+        damage = Hitbox.CalculateDamage(type, damage);
+        Debug.Log($"{name} HIT {type} : {damage}");
         hp = Mathf.Clamp(hp - damage, 0f, maxHp);
         if (hp > 0)
             return;

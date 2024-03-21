@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Impact System/Surface", fileName = "Surface")]
 public class Surface : ScriptableObject
 {
-    [SerializeField]
+    [System.Serializable]
     public class SurfaceImpactTypeEffect
     {
         public ImpactType impactType;           // hit effect Á¾·ù

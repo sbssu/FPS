@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01036b15dcad1d04797727f422ea5574, type: 3}
+  m_Name: Metal Surface Effect - Bullet Effect
+  m_EditorClassIdentifier: 
+  spawnObjectEffects:
+  - {fileID: 11400000, guid: e1440da9c04cd8447a5bff434df7f6db, type: 2}
+  - {fileID: 11400000, guid: 3afdf2879a177ff4d93b45a1d59b6703, type: 2}
+  playAudioEffects:
+  - {fileID: 11400000, guid: a4dac18f2f800a94596707289737cb5b, type: 2}

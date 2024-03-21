@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "IMpact System/Spawn Object Effect", fileName = "SpawnObjectEffect")]
+[CreateAssetMenu(menuName = "Impact System/Spawn Object Effect", fileName = "SpawnObjectEffect")]
+[System.Serializable]
 public class SpawnObjectEffect : ScriptableObject
 {
     public GameObject prefab;

@@ -17,13 +17,15 @@ public class Bullet : MonoBehaviour, IReturnPool<Bullet>
         this.moveSpeed = moveSpeed;
         this.damage = damage;
         showTime = 0.0f;
+
+        GetComponent<Rigidbody>().velocity = transform.forward * moveSpeed;
     }
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
-        Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-        if (enemy != null)
-            enemy.Hit(damage);
+        Hitbox hitbox = collision.gameObject.GetComponent<Hitbox>();
+        if (hitbox != null)
+            hitbox.Hit(damage);
 
         Vector3 normal = collision.contacts[0].normal;
 
@@ -37,7 +39,7 @@ public class Bullet : MonoBehaviour, IReturnPool<Bullet>
 
     protected virtual void Update()
     {
-        transform.position += transform.forward * moveSpeed * Time.deltaTime;
+        //transform.position += transform.forward * moveSpeed * Time.deltaTime;
         if((showTime += Time.deltaTime) >= TimeToDestroyed)
         {
             Release();
