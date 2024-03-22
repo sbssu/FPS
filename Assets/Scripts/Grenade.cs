@@ -5,6 +5,7 @@ using UnityEngine;
 public class Grenade : Bullet
 {
     [SerializeField] float explodeRange;
+    [SerializeField] float explodePower;
 
     public override void Shoot(float moveSpeed, float damage)
     {
@@ -30,9 +31,29 @@ public class Grenade : Bullet
         Collider[] colliders = Physics.OverlapSphere(transform.position, explodeRange);
         foreach(Collider collider in colliders)
         {
-            Enemy enemy = collider.gameObject.GetComponent<Enemy>();
-            if(enemy != null)
+            Enemy enemy = collider.GetComponent<Enemy>();
+            if (enemy != null)
+            {
                 enemy.OnHit(HITTYPE.UPPER, damage);
+                continue;
+            }
+
+            Destructible dest = collider.GetComponent<Destructible>();
+            if (dest != null)
+            {
+                dest.Crush();
+            }
+        }
+
+        colliders = Physics.OverlapSphere(transform.position, explodeRange);
+        foreach(Collider collider in colliders)
+        {
+            Rigidbody rigid = collider.GetComponent<Rigidbody>();
+            if(rigid != null)
+            {
+                // 폭발 지점 대비 내가 받아야할 힘을 가한다.
+                rigid.AddExplosionForce(explodePower, transform.position, explodeRange);
+            }
         }
 
         Release();
